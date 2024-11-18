@@ -1,12 +1,12 @@
-﻿using RPGchyba.Armory;
-using RPGchyba.Places;
+﻿using Gierka.Armory;
+using Gierka.Places;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RPGchyba
+namespace Gierka
 {
     public class Player
     {
@@ -19,7 +19,7 @@ namespace RPGchyba
 
         //Stats and info
         public string name;
-        public int runes = 0;
+        public int runes = 100;
         public int health = 10;
         public int damage = 1;
         public int weaponValue = 1;
@@ -54,6 +54,7 @@ namespace RPGchyba
         public void AddWeapon(string weaponName)
         {
             Weapon weapon = Weapon.AllWeapons.Find(a => a.Name == weaponName);
+            
             if (weapon != null)
             {
                 Weapons.Add(weapon);
@@ -92,7 +93,7 @@ namespace RPGchyba
             if (selectedWeapon != null)
             {
                 CurrentWeapon = selectedWeapon;
-                Console.WriteLine($"{selectedWeapon.Name} is now your equipped armor.");
+                Console.WriteLine($"{selectedWeapon.Name} is now your equipped weapon.");
                 Console.WriteLine();
                 Console.WriteLine("/Press any Key/");
                 Console.ReadKey();
@@ -100,7 +101,7 @@ namespace RPGchyba
             }
             else
             {
-                Console.WriteLine("Armor not found in your inventory!");
+                Console.WriteLine("Weapon not found in your inventory!");
                 Console.WriteLine();
                 Console.WriteLine("/Press any Key/");
                 Console.ReadKey();
@@ -140,11 +141,11 @@ namespace RPGchyba
                 foreach (var armor in Armors)
                 {
                     Shop.ShowArmorInfo(armor);
-                    Console.WriteLine("|........................................| ");
+                    Console.WriteLine("|........................................|");
                 }
                 Console.WriteLine("|                                        |");
                 Console.WriteLine("|         (E)xit          (P)ick         |");
-                Console.WriteLine(" ----------------------------------------- ");
+                Console.WriteLine(" -----------------------------------------");
                 
                     string choice = Console.ReadLine().ToLower();
                     if (choice == "p" || choice == "pick")
@@ -162,14 +163,14 @@ namespace RPGchyba
                     Console.Clear();
                     Console.WriteLine("                  Weapons                  ");
                     Console.WriteLine(" ----------------------------------------- ");
-                    Console.WriteLine("|                                        |");
+                    Console.WriteLine("|                                         |");
                     foreach (var weapon in Weapons)
                     {
                         Shop.ShowWeaponInfo(weapon);
-                        Console.WriteLine("|........................................| ");
+                        Console.WriteLine("|.........................................|");
                     }
-                    Console.WriteLine("|                                        |");
-                    Console.WriteLine("|         (E)xit          (P)ick         |");
+                    Console.WriteLine("|                                         |");
+                    Console.WriteLine("|         (E)xit          (P)ick          |");
                     Console.WriteLine(" ----------------------------------------- ");
 
                     string choice = Console.ReadLine().ToLower();
@@ -179,7 +180,6 @@ namespace RPGchyba
                         string pick = Console.ReadLine().ToLower();
                         SetCurrentWeapon(pick);
                         Console.ReadKey();
-                        Console.Clear();
                     }
                 }
             else if(input == "e" || input == "exit")

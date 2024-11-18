@@ -4,19 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RPGchyba.Armory
+namespace Gierka.Armory
 {
-    public class Weapon
+    public class Weapon : Item
     {
-        public string Name { get; set; }
         public int Attack { get; set; }
-        public int Cost { get; set; }
 
-        public Weapon(string name, int damage, int runes)
+        public Weapon(string name, int damage, int cost) : base(name,cost)
         {
-            Name = name;
             Attack = damage;
-            Cost = runes;
         }
 
         //Available weapons
@@ -27,8 +23,35 @@ namespace RPGchyba.Armory
             new Weapon("Enchanted Big Ciupaga", 28, 60)
         };
 
-        //Eq weapons
-        
+        //Buying weapons
+        public override void Buy(Player p)
+        {
+           if(!p.Weapons.Any(w => w.Name == Name))
+            {
+                if (p.runes >= Cost)
+                {
+                    p.runes -= Cost;
+                    p.AddWeapon(Name);
+                    Console.WriteLine("You bought " + Name + "!");
+                    Console.WriteLine("");
+
+                }
+                else
+                {
+                    Console.WriteLine("You don't have enough runes!");
+                    Console.WriteLine("");
+                    Console.WriteLine("/Press any key/");
+                    Console.ReadKey();
+                }
+            }    
+           else
+            {
+                Console.WriteLine("Already bought!");
+            }
+
+            
+        }
+
 
 
     }

@@ -1,20 +1,37 @@
-﻿using System;
+﻿using Gierka.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RPGchyba.Armory
+namespace Gierka.Armory
 {
-    internal abstract class Item
+    public abstract class Item : IBuy
     {
         public string Name { get; set; }
-        public int Price { get; set; }
+        public int Cost { get; set; }
 
-        public Item(string name, int price)
+        public Item(string name, int cost)
         {
             Name = name;
-            Price = price;
+            Cost = cost;
+        }
+
+        public virtual void Buy(Player p)
+        {
+            if (p.runes >= Cost)
+            {
+                p.runes -= Cost;
+                Console.WriteLine("Succes! You bought " +Name+ "!");
+                Console.WriteLine("");
+
+            }
+            else
+            {
+                Console.WriteLine("You don't have enough runes!");
+                Console.ReadKey();
+            }
         }
     }
 }

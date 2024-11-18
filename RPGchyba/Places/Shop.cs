@@ -1,4 +1,5 @@
-using RPGchyba.Armory;
+using Gierka.Armory;
+using Gierka.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace RPGchyba.Places
+namespace Gierka.Places
 {
 
     public static class Shop
@@ -57,27 +58,13 @@ namespace RPGchyba.Places
 
             }
         }
-        static void Buy(Player p, int cost, ref item)
-        {
-            if (p.runes >= cost)
-            {
-                p.runes -= cost;
-                Console.WriteLine("You bought " + item +"!" );
-                Console.WriteLine("");
-
-            }
-            else
-            {
-                Console.WriteLine("You don't have enough runes!");
-                Console.ReadKey();
-            }
-        }
 
         static void WeaponsShop(Player p)
         {
             int r = p.runes;
             int n = 0;
             bool condition = true;
+            
 
             while (condition)
             {
@@ -87,7 +74,8 @@ namespace RPGchyba.Places
                 }
 
                 Weapon selectedWeapon = Weapon.AllWeapons[n];
-                
+                string Wname = selectedWeapon.Name;
+
 
 
                 Console.Clear();
@@ -103,8 +91,11 @@ namespace RPGchyba.Places
                     string choice = Console.ReadLine();
                     if (choice == "b" || choice == "buy")
                     {
-                        Buy();
-                        condition = false;
+                        selectedWeapon.Buy(p);
+                        EquipWeapon(p, Wname);
+
+
+                    condition = false;
                     }
                     else if (choice == "n" || choice == "next")
                         n++;
@@ -122,26 +113,38 @@ namespace RPGchyba.Places
 
             while (condition)
             {
-                if (n >= Weapon.AllWeapons.Count)
+                if (n >=Armor.AllArmors.Count)
                 {
                     n = 0;
-                    break;
                 }
 
-                Armor selectedArmor = Armor.AllArmors[0];
+                Armor selectedArmor = Armor.AllArmors[n];
+                string Aname = selectedArmor.Name;
 
                 Console.Clear();
                 Console.WriteLine("                   Armors                  ");
                 Console.WriteLine(" ----------------------------------------- ");
-                Console.WriteLine("|  Runes: " + $"{r,3}" + "                        Cost:   |");
-                Console.WriteLine("|                                         |");
+                Console.WriteLine("|  Runes: " + $"{r,3}" + "                    Cost:   |");
+                Console.WriteLine("|                                        |");
                 ShowArmorInfo(selectedArmor);
-                Console.WriteLine("|                                         |");
-                Console.WriteLine("|          (B)uy          (N)ext          |");
+                Console.WriteLine("|                                        |");
+                Console.WriteLine("|          (B)uy          (N)ext         |");
                 Console.WriteLine(" ----------------------------------------- ");
                 Console.WriteLine("");
+                    string choice = Console.ReadLine();
+                    if (choice == "b" || choice == "buy")
+                    {
+                        selectedArmor.Buy(p);
+                        EquipArmor(p, Aname);
 
-                ShopMenu(ref condition, ref n);
+
+                        condition = false;
+                    }
+                    else if (choice == "n" || choice == "next")
+                        n++;
+                    else if (choice == "e" || choice == "exit")
+                        condition = false;
+
             }
         }
 
@@ -158,6 +161,29 @@ namespace RPGchyba.Places
             Console.WriteLine($"|  Cost: {armor.Cost,-24}        |");
         }
 
+        public static void EquipWeapon(Player p, string selectedWeapon)
+        {
+            Console.WriteLine("Do you want to equip it now?");
+            Console.WriteLine("Yes or No");
+            Console.WriteLine("");
+            string answear = Console.ReadLine().ToLower();
+            if (answear == "y" || answear == "yes")
+                p.SetCurrentWeapon(selectedWeapon);
+            else
+                Console.Clear();
+        }
+
+        public static void EquipArmor(Player p, string selectedArmor)
+        {
+            Console.WriteLine("Do you want to equip it now?");
+            Console.WriteLine("Yes or No");
+            Console.WriteLine("");
+            string answear = Console.ReadLine().ToLower();
+            if (answear == "y" || answear == "yes")
+                p.SetCurrentArmor(selectedArmor);
+            else
+                Console.Clear();
+        }
     }
 
 }

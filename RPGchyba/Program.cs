@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RPGchyba.Places;
+using Gierka.Places;
 
-namespace RPGchyba
+namespace Gierka
 {
 
     public class Program
@@ -34,6 +34,7 @@ namespace RPGchyba
             Console.Clear();
             currentPlayer.ShowInventory();
             Shop.LoadShop(currentPlayer);
+            currentPlayer.ShowInventory();
 
 
             Console.WriteLine("You awaken in a forest, your body marked with glowing runes," +
