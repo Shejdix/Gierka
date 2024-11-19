@@ -4,7 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
+
 
 namespace Gierka.Dashboards
 {
@@ -18,20 +21,45 @@ namespace Gierka.Dashboards
         Random rand;
 
         //Stats and info
-        public string name;
-        public int runes = 100;
-        public int health = 10;
-        public int damage = 1;
-        public int weaponValue = 1;
-        public int defence = 0;
-        public int blessings = 5;
+        public string name { get; set; }
+        public int runes { get; set; } = 100;
+        public int coins { get; set; } = 200;
+        public int health { get; set; } = 10;
+        public int damage { get; set; } = 1; //with lvls
+        public int weaponValue { get; set; }
+        public int defence { get; set; } = 0;
+        public int blessings { get; set; } = 5;
+
+        string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "playerData.json");
+
+        public static void showstats(Player p)
+        {
+            Console.WriteLine($"| Name: { p.name,-8}                          |");
+            Console.WriteLine($"| Runes: {p.runes,-4}                             |");
+            Console.WriteLine($"| Coins: {p.coins, -4}                             |");
+            Console.WriteLine($"| Health: {p.health,-4}                            |");
+            Console.WriteLine($"| Damage: {p.damage,-4}                            | ");
+            Console.WriteLine($"| Current Weapon value: {p.weaponValue,-4}              | ");
+            Console.WriteLine($"| Defence: {p.defence, -4}                           | ");
+            Console.WriteLine($"| Blessings: {p.blessings, -4}                         | ");
+        }
+
+        public static void SavePlayerToFile(Player player, string filePath)
+        {
+            
+            string jsonString = JsonSerializer.Serialize(player, new JsonSerializerOptions { WriteIndented = true });
+
+            //Saving to File
+            File.WriteAllText(filePath, jsonString);
+            Console.WriteLine("Player saved to file!");
+        }
 
         //Others
 
         public int mods = 1;
 
 
-        //Inventory
+        //Inventory 
         public Player()
         {
             Armors = new List<Armor>();
@@ -87,7 +115,7 @@ namespace Gierka.Dashboards
 
             }
         }
-        public void SetCurrentWeapon(string weaponName)
+        public void SetCurrentWeapon(string weaponName, Player p)
         {
             Weapon selectedWeapon = Weapons.Find(a => a.Name.Equals(weaponName, StringComparison.OrdinalIgnoreCase));
             if (selectedWeapon != null)
@@ -98,6 +126,7 @@ namespace Gierka.Dashboards
                 Console.WriteLine("/Press any Key/");
                 Console.ReadKey();
                 Console.Clear();
+                p.weaponValue = CurrentWeapon.Attack;
             }
             else
             {
@@ -109,14 +138,14 @@ namespace Gierka.Dashboards
 
             }
         }
-        public void BasicInventory()
+        public void BasicInventory(Player p)
         {
             Armors.Add(new Armor("Linen Tunic", 0, 0));
             Weapons.Add(new Weapon("Long Stick", 2, 0));
             SetCurrentArmor("Linen Tunic");
-            SetCurrentWeapon("Long Stick");
+            SetCurrentWeapon("Long Stick", p);
         }
-        public void ShowInventory()
+        public void ShowInventory(Player p)
         {
             while (true)
             {
@@ -137,14 +166,14 @@ namespace Gierka.Dashboards
                     Console.Clear();
                     Console.WriteLine("                   Armors                  ");
                     Console.WriteLine(" ----------------------------------------- ");
-                    Console.WriteLine("|                                        |");
+                    Console.WriteLine("|                                         |");
                     foreach (var armor in Armors)
                     {
                         Shop.ShowArmorInfo(armor);
-                        Console.WriteLine("|........................................|");
+                        Console.WriteLine("|.........................................|");
                     }
-                    Console.WriteLine("|                                        |");
-                    Console.WriteLine("|         (E)xit          (P)ick         |");
+                    Console.WriteLine("|                                         |");
+                    Console.WriteLine("|         (E)xit          (P)ick          |");
                     Console.WriteLine(" -----------------------------------------");
 
                     string choice = Console.ReadLine().ToLower();
@@ -178,7 +207,7 @@ namespace Gierka.Dashboards
                     {
                         Console.WriteLine("Name of chosen weapon: ");
                         string pick = Console.ReadLine().ToLower();
-                        SetCurrentWeapon(pick);
+                        SetCurrentWeapon(pick,p);
                         Console.ReadKey();
                     }
                 }
@@ -195,14 +224,32 @@ namespace Gierka.Dashboards
         //Difficulty Method
         public int GetDef()
         {
+            if (rand == null)
+            {
+                throw new InvalidOperationException("Random generator has not been initialized.");
+            }
+
             int upper = 2 * mods + 6;
             int lower = mods + 2;
+            if (lower >= upper)
+            {
+                throw new ArgumentOutOfRangeException("lower");
+            }
             return rand.Next(lower, upper);
         }
         public int GetAttack()
         {
+            if (rand == null)
+            {
+                throw new InvalidOperationException("Random generator has not been initialized.");
+            }
+
             int upper = 2 * mods + 2;
             int lower = mods + 2;
+            if (lower >= upper)
+            {
+                throw new ArgumentOutOfRangeException("lower");
+            }
             return rand.Next(lower, upper);
         }
     }

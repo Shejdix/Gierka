@@ -1,4 +1,6 @@
 ﻿using Gierka.Armory;
+using Gierka.Dashboards;
+using Gierka.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +11,30 @@ namespace Gierka.Buildings
 {
     public class Place
     {
-        public string Name { get; set; }
-
-        public Place(string name)
+        public string Position { get; set; }
+        public Place(string position)
         {
-            Name = name;
+            Position = position;
         }
 
-        public static List<Place> FreePlaces = new List<Place>
+
+
+        public virtual void Buy(Player p, SettStats s)
         {
-            new Place(""),
-            new Place(""),
-            new Place(""),
-            new Place(""),
-        };
+            Console.WriteLine("");
+        }
+
+        public virtual void BuildCheck(Player p, SettStats s, House chosenPlace)
+        {
+            Console.WriteLine("");
+        }
+
+        public virtual void UpgradeCheck()
+        {
+            Console.WriteLine("");
+        }
+
+        
+
     }
 }

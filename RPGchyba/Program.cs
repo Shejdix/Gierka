@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Gierka.Buildings;
 using Gierka.Dashboards;
 using Gierka.Places;
+using Gierka.Tools;
+using System.Text.Json;
+using System.IO;
 
 namespace Gierka
 {
@@ -13,72 +16,98 @@ namespace Gierka
     public class Program
     {
         public static Player currentPlayer = new Player();
-        
+        public static SettStats currentSett = new SettStats();
+
+        public static Player LoadPlayerFromFile(string filePath)
+        {
+            // Odczyt JSON z pliku
+            string jsonString = File.ReadAllText(filePath);
+
+            // Deserializacja JSON do obiektu
+            Player currentplayer = JsonSerializer.Deserialize<Player>(jsonString);
+            Console.WriteLine("Player loaded from file!");
+            return currentplayer;
+        }
+
         public static bool mainLoop = true;
         static void Main(string[] args)
-        { 
-
+        {
+            
             Start();
-            Encounters.FirstEncounter();
+            //Temporarily
             while (mainLoop)
             {
                 Encounters.RandomEncounter();
+                
             }
 
         }
 
         static void Start()
         {
-            currentPlayer.BasicInventory();
             Console.WriteLine("Rise of the forgotten gods ");
             Console.WriteLine(" ");
             Console.WriteLine("Your name is: ");
             currentPlayer.name = Console.ReadLine();
             Console.Clear();
 
-            Shop.LoadShop(currentPlayer);
-            currentPlayer.ShowInventory();
-            Settlement.LoadSettlement();
-
-
             Console.WriteLine("You awaken in a forest, your body marked with glowing runes," +
                 " their meaning clear despite your lost memories. ");
+            //Two options 
             if (currentPlayer.name == "")
             {
                 Console.WriteLine("You can't even remeber your own name but a mission " +
-                    "- to stop the world's end. ");
+                    "- to save as many people as you can. ");
                 currentPlayer.name = "Zdzisiu";
             }
             else
-                Console.WriteLine("Only your name - '" + currentPlayer.name + "' and a mission remain: to stop the world’s end. ");
+                Console.WriteLine("Only your name - '" + currentPlayer.name + "' and a mission remain: to save as many people as you can. ");
 
             Console.WriteLine("Grabbing a long stick for protection, you venture deeper into the ancient woods, " +
             "guided by whispers of forgotten gods." + Environment.NewLine + "Your journey begins.");
 
             Console.WriteLine(Environment.NewLine + Environment.NewLine);
-            Console.WriteLine("(Press any key)");
+            Console.WriteLine("/Press any key/");
             Console.ReadKey();
             Console.Clear();
-            Console.WriteLine("It appeared before your eyes.\r\n Bathed in celestial light," +
-                " astride a magnificent white steed, " +
-                "gliding slowly into the heart of the city.\r\n" +
-                " Its crown shimmered like stardust against " +
-                "the vast canvas of the night sky.\r\nThis" +
-                " was no mere omen — It was the sign that " +
-                "humanity would soon be brought face-to-face" +
-                " with its deepest frailties and flaws.");
-            Console.WriteLine(Environment.NewLine + Environment.NewLine);
-            Console.WriteLine("(Press any key)");
+            Encounters.FirstEncounter();
+            Console.WriteLine("As you manage to defeat the first opponent on your way, you stepped on the right land.");
+            Console.WriteLine("You decided to build your shelter for others here, in the forest protected by old gods.");
+            Console.WriteLine("");
+            Console.WriteLine("/Press any key/");
             Console.ReadKey();
             Console.Clear();
-            Console.WriteLine("After wandering for a long hours, you found a ruins of the village.\r\n " +
-                "Pierwsza trąba zebrała swoje żniwa, co tylko przyspieszyło twoje kroki w kierunku postaci w kapturze\r\n" +
-                "Przed ruinami stał starszy człowiek, powoli przeczesując swoje wąsy" +
-                "Nim się zorientowałeś, starzec zniknął i zerwał się burzliwy wiatr");
-            Console.WriteLine(Environment.NewLine + Environment.NewLine);
-            Console.WriteLine("(Press any key)");
-            Console.ReadKey();
+            Console.WriteLine("Name your settlement: ");
+            currentSett.Name = Console.ReadLine();
             Console.Clear();
+
+            //NPC dial
+            NPC NPC1 = new NPC("NPC1", "Thanks for help!");
+            NPC NPC2 = new NPC("NPC2", "Do you know any close shelter?");
+            NPC NPC3 = new NPC("NPC3", "Can You help us?");
+
+            List<NPC> npcs = new List<NPC> { NPC1, NPC2 };
+
+            //Dial with one npc
+            Dialogue.StartDialogue(NPC1);
+            Console.WriteLine("");
+            Console.WriteLine("/Press any key/");
+            Console.Clear();
+
+            //Dial with many npc
+            Dialogue.StartDialogue(npcs);
+            Console.WriteLine("");
+            Console.WriteLine("/Press any key/");
+            Console.Clear();
+
+            //Dial with anwears from player
+            List<string> responses = new List<string> { "Yes, you can join me", "Sure, join me" };
+            Dialogue.StartDialogue(NPC3, responses);
+            Console.WriteLine("");
+            Console.WriteLine("/Press any key/");
+            Console.Clear();
+
+
         }
     }
 }

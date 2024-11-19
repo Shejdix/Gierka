@@ -60,6 +60,7 @@ namespace Gierka.Places
             }
         }
 
+        //Armory Shops
         static void WeaponsShop(Player p)
         {
             int r = p.runes;
@@ -86,7 +87,8 @@ namespace Gierka.Places
                 Console.WriteLine("|                                         |");
                 ShowWeaponInfo(selectedWeapon);
                 Console.WriteLine("|                                         |");
-                Console.WriteLine("|          (B)uy          (N)ext          |");
+                Console.WriteLine("|      (B)uy                  (N)ext      |");
+                Console.WriteLine("|                 (E)xit                  |");
                 Console.WriteLine(" ----------------------------------------- ");
                 Console.WriteLine("");
                     string choice = Console.ReadLine();
@@ -125,11 +127,12 @@ namespace Gierka.Places
                 Console.Clear();
                 Console.WriteLine("                   Armors                  ");
                 Console.WriteLine(" ----------------------------------------- ");
-                Console.WriteLine("|  Runes: " + $"{r,3}" + "                    Cost:   |");
-                Console.WriteLine("|                                        |");
+                Console.WriteLine("|  Runes: " + $"{r,3}" + "                             |");
+                Console.WriteLine("|                                         |");
                 ShowArmorInfo(selectedArmor);
-                Console.WriteLine("|                                        |");
-                Console.WriteLine("|          (B)uy          (N)ext         |");
+                Console.WriteLine("|                                         |");
+                Console.WriteLine("|      (B)uy                  (N)ext      |");
+                Console.WriteLine("|                 (E)xit                  |");
                 Console.WriteLine(" ----------------------------------------- ");
                 Console.WriteLine("");
                     string choice = Console.ReadLine();
@@ -149,6 +152,7 @@ namespace Gierka.Places
             }
         }
 
+        //Showing armory info
         public static void ShowWeaponInfo(Weapon weapon)
         {
             Console.WriteLine($"|  Name: {weapon.Name,-24}         |");
@@ -157,11 +161,12 @@ namespace Gierka.Places
         }
         public static void ShowArmorInfo(Armor armor)
         {
-            Console.WriteLine($"|  Name: {armor.Name,-24}        |");
-            Console.WriteLine($"|  Defence: {armor.Defence,-24}     |");
-            Console.WriteLine($"|  Cost: {armor.Cost,-24}        |");
+            Console.WriteLine($"|  Name: {armor.Name,-24}         |");
+            Console.WriteLine($"|  Defence: {armor.Defence,-24}      |");
+            Console.WriteLine($"|  Cost: {armor.Cost,-24}         |");
         }
 
+        //Equipping
         public static void EquipWeapon(Player p, string selectedWeapon)
         {
             Console.WriteLine("Do you want to equip it now?");
@@ -169,7 +174,7 @@ namespace Gierka.Places
             Console.WriteLine("");
             string answear = Console.ReadLine().ToLower();
             if (answear == "y" || answear == "yes")
-                p.SetCurrentWeapon(selectedWeapon);
+                p.SetCurrentWeapon(selectedWeapon, p);
             else
                 Console.Clear();
         }

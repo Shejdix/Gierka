@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 
 namespace Gierka.Dashboards
 {
-    internal class SettStats
+    public class SettStats
     {
-    public string Name { get; set; }
-    public int PeopleCount { get; set; }
-    public int SettDefence {  get; set; }
-    public int SettAttack { get; set; }
+        public string Name { get; set; }
+        public int PeopleCount { get; set; } = 0;
+        public int SettDefence { get; set; } = 0;
+        public int SettAttack { get; set; } = 0;
+        public int Wood {  get; set; } = 90;
+        public int RawMat { get; set; } = 90;
 
+
+        
+       
     }
 }
