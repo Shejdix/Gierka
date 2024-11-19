@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Gierka.Dashboards;
 using Gierka.Interfaces;
 
 namespace Gierka.Interfaces
@@ -12,6 +13,6 @@ namespace Gierka.Interfaces
         string Name { get; }
         int Cost { get; }
 
-        void Buy(Player p);
+        public void Buy(Player p);
     }
 }

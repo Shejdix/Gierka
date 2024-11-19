@@ -27,6 +27,8 @@ namespace Gierka
             Console.ReadKey();
             Combat(true, "", 0, 0);
         }
+
+        //Bosses
         public static void ChorsEncounter()
         {
             Console.Clear();

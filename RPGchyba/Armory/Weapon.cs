@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Gierka.Dashboards;
 
 namespace Gierka.Armory
 {
@@ -48,11 +49,6 @@ namespace Gierka.Armory
             {
                 Console.WriteLine("Already bought!");
             }
-
-            
         }
-
-
-
     }
 }

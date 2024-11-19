@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Gierka.Buildings;
+using Gierka.Dashboards;
 using Gierka.Places;
 
 namespace Gierka
@@ -11,6 +13,7 @@ namespace Gierka
     public class Program
     {
         public static Player currentPlayer = new Player();
+        
         public static bool mainLoop = true;
         static void Main(string[] args)
         { 
@@ -32,9 +35,10 @@ namespace Gierka
             Console.WriteLine("Your name is: ");
             currentPlayer.name = Console.ReadLine();
             Console.Clear();
-            currentPlayer.ShowInventory();
+
             Shop.LoadShop(currentPlayer);
             currentPlayer.ShowInventory();
+            Settlement.LoadSettlement();
 
 
             Console.WriteLine("You awaken in a forest, your body marked with glowing runes," +

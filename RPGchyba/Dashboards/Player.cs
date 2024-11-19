@@ -6,14 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gierka
+namespace Gierka.Dashboards
 {
     public class Player
     {
-    public List<Armor> Armors { get; private set; }
-    public List<Weapon> Weapons { get; private set; }
-    public Armor CurrentArmor { get; private set; }
-    public Weapon CurrentWeapon { get; private set; }   
+        public List<Armor> Armors { get; private set; }
+        public List<Weapon> Weapons { get; private set; }
+        public Armor CurrentArmor { get; private set; }
+        public Weapon CurrentWeapon { get; private set; }
 
         Random rand;
 
@@ -41,7 +41,7 @@ namespace Gierka
         public void AddArmor(string armorName)
         {
             Armor armor = Armor.AllArmors.Find(a => a.Name == armorName);
-            if(armor != null)
+            if (armor != null)
             {
                 Armors.Add(armor);
                 Console.WriteLine($"{armor.Name,24} added to inventory.");
@@ -54,7 +54,7 @@ namespace Gierka
         public void AddWeapon(string weaponName)
         {
             Weapon weapon = Weapon.AllWeapons.Find(a => a.Name == weaponName);
-            
+
             if (weapon != null)
             {
                 Weapons.Add(weapon);
@@ -111,42 +111,42 @@ namespace Gierka
         }
         public void BasicInventory()
         {
-            Armors.Add(new Armor("Linen Tunic",0,0));
+            Armors.Add(new Armor("Linen Tunic", 0, 0));
             Weapons.Add(new Weapon("Long Stick", 2, 0));
             SetCurrentArmor("Linen Tunic");
             SetCurrentWeapon("Long Stick");
         }
         public void ShowInventory()
         {
-            while (true) 
-            { 
-            Console.WriteLine("                 Inventory                 ");
-            Console.WriteLine(" ----------------------------------------- ");
-            Console.WriteLine("|                                         |");
-            Console.WriteLine("|                                         |");
-            Console.WriteLine("|    (A)rmors             (W)eapons       |");
-            Console.WriteLine("|                                         |");
-            Console.WriteLine("|                                         |");
-            Console.WriteLine("|                (E)xit                   |");
-            Console.WriteLine("|                                         |");
-            Console.WriteLine(" ----------------------------------------- ");
-            Console.WriteLine("");
-            string input = Console.ReadLine().ToLower();
-            if (input == "a" || input == "armors")
+            while (true)
             {
-                Console.Clear();
-                Console.WriteLine("                   Armors                  ");
+                Console.WriteLine("                 Inventory                 ");
                 Console.WriteLine(" ----------------------------------------- ");
-                Console.WriteLine("|                                        |");
-                foreach (var armor in Armors)
+                Console.WriteLine("|                                         |");
+                Console.WriteLine("|                                         |");
+                Console.WriteLine("|    (A)rmors             (W)eapons       |");
+                Console.WriteLine("|                                         |");
+                Console.WriteLine("|                                         |");
+                Console.WriteLine("|                (E)xit                   |");
+                Console.WriteLine("|                                         |");
+                Console.WriteLine(" ----------------------------------------- ");
+                Console.WriteLine("");
+                string input = Console.ReadLine().ToLower();
+                if (input == "a" || input == "armors")
                 {
-                    Shop.ShowArmorInfo(armor);
-                    Console.WriteLine("|........................................|");
-                }
-                Console.WriteLine("|                                        |");
-                Console.WriteLine("|         (E)xit          (P)ick         |");
-                Console.WriteLine(" -----------------------------------------");
-                
+                    Console.Clear();
+                    Console.WriteLine("                   Armors                  ");
+                    Console.WriteLine(" ----------------------------------------- ");
+                    Console.WriteLine("|                                        |");
+                    foreach (var armor in Armors)
+                    {
+                        Shop.ShowArmorInfo(armor);
+                        Console.WriteLine("|........................................|");
+                    }
+                    Console.WriteLine("|                                        |");
+                    Console.WriteLine("|         (E)xit          (P)ick         |");
+                    Console.WriteLine(" -----------------------------------------");
+
                     string choice = Console.ReadLine().ToLower();
                     if (choice == "p" || choice == "pick")
                     {
@@ -157,9 +157,9 @@ namespace Gierka
                         Console.Clear();
                     }
 
-            }
-            else if (input == "w" || input == "weapons")
-            {
+                }
+                else if (input == "w" || input == "weapons")
+                {
                     Console.Clear();
                     Console.WriteLine("                  Weapons                  ");
                     Console.WriteLine(" ----------------------------------------- ");
@@ -182,7 +182,7 @@ namespace Gierka
                         Console.ReadKey();
                     }
                 }
-            else if(input == "e" || input == "exit")
+                else if (input == "e" || input == "exit")
                 {
                     Console.Clear();
                     break;
@@ -195,14 +195,14 @@ namespace Gierka
         //Difficulty Method
         public int GetDef()
         {
-            int upper = (2 * mods + 6);
-            int lower = (mods + 2);
+            int upper = 2 * mods + 6;
+            int lower = mods + 2;
             return rand.Next(lower, upper);
         }
         public int GetAttack()
         {
-            int upper = (2 * mods + 2);
-            int lower = (mods + 2);
+            int upper = 2 * mods + 2;
+            int lower = mods + 2;
             return rand.Next(lower, upper);
         }
     }
