@@ -12,17 +12,7 @@ Funkcje gry
 
 
 
-Struktura katalogów
-RPGchyba/
-├── Dashboards/ | Zarządzanie grą i graczem
-│ └── Player.cs
-├── Places/ | Lokacje w grze (np. Shop, Forest)
-│ └── Shop.cs
-├── Tools/  | Narzędzia pomocnicze (dialogi, losowe spotkania)
-│ ├── Dialogue.cs
-│ └── Encounters.cs
-└── Program.cs  | Główna logika gry
-
+<pre lang="markdown"> Struktura katalogów ``` RPGchyba/ ├── Dashboards/ # Zarządzanie grą i graczem │ └── Player.cs ├── Places/ # Lokacje w grze (np. Shop, Forest) │ └── Shop.cs ├── Tools/ # Narzędzia pomocnicze (dialogi, losowe spotkania) │ ├── Dialogue.cs │ └── Encounters.cs └── Program.cs # Główna logika gry ``` </pre>
 
 
 Jak uruchomić?
