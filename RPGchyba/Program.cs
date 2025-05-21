@@ -34,17 +34,20 @@ namespace Gierka
         {
             
             Start();
-            //Temporarily
-            while (mainLoop)
-            {
-                Encounters.RandomEncounter();
+            Settlement.LoadSettlement(currentPlayer, currentSett);
+
+            //Not yet :(
+            //while (mainLoop)
+            //{
+            //   Encounters.RandomEncounter();
                 
-            }
+           // }
 
         }
 
         static void Start()
-        {
+        {   
+            Console.Clear();
             Console.WriteLine("Rise of the forgotten gods ");
             Console.WriteLine(" ");
             Console.WriteLine("Your name is: ");
@@ -92,12 +95,14 @@ namespace Gierka
             Dialogue.StartDialogue(NPC1);
             Console.WriteLine("");
             Console.WriteLine("/Press any key/");
+            Console.ReadKey();
             Console.Clear();
 
             //Dial with many npc
             Dialogue.StartDialogue(npcs);
             Console.WriteLine("");
             Console.WriteLine("/Press any key/");
+            Console.ReadKey();
             Console.Clear();
 
             //Dial with anwears from player
@@ -105,6 +110,7 @@ namespace Gierka
             Dialogue.StartDialogue(NPC3, responses);
             Console.WriteLine("");
             Console.WriteLine("/Press any key/");
+            Console.ReadKey();
             Console.Clear();
 
 

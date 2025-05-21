@@ -16,7 +16,11 @@ namespace Gierka.Tools
         //Encounter 
         public static void FirstEncounter()
         {
-            Console.WriteLine("A faceless figure appears in the forest and begins to attack you. Its movements are swift and eerie, as it silently emerges from the shadows between the trees.");
+            Console.WriteLine("A faceless figure appears in the forest and begins to attack you. Its movements are swift and eerie, as it silently");
+            Console.WriteLine("emerges from the shadows between the trees.");
+            Console.WriteLine("");
+            Console.WriteLine("/Press any key/");
+            Console.ReadKey();
             Combat(false, "Faceless form", 2, 6);
         }
         public static void BasicFightEncounter()
@@ -39,7 +43,7 @@ namespace Gierka.Tools
         //Random encounters tool
         public static void RandomEncounter()
         {
-            switch (rand.Next(0, 2))
+            switch (rand.Next(0, 1))
             {
                 case 0:
                     BasicFightEncounter();
@@ -56,8 +60,8 @@ namespace Gierka.Tools
         public static void Combat(bool random, string name, int power, int health)
         {
             string n = "";
-            int p = 0;
-            int h = 0;
+            int p = 1;
+            int h = 1;
             if (random)
             {
                 n = GetName();
@@ -103,7 +107,7 @@ namespace Gierka.Tools
                 {
                     //Defend
                     Console.WriteLine("The " + n + " charges at you, so you took a defensive stance");
-                    int damage = rand.Next(1, 2) * p - Program.currentPlayer.defence;
+                    int damage = rand.Next(1, 4) * p - Program.currentPlayer.defence;
                     if (damage < 0)
                         damage = 0;
                     int attack = rand.Next(1, Program.currentPlayer.weaponValue) / 2;
@@ -114,13 +118,14 @@ namespace Gierka.Tools
                 else if (input.ToLower() == "r" || input.ToLower() == "run")
                 {
                     //Run
-                    if (rand.Next(0, 2) == 0)
+                    if (rand.Next(0, 0) == 0)
                     {
                         Console.WriteLine("You run away from unsucessfully run away from " + n + " and it shoved you to the ground.");
-                        int damage = rand.Next(1, 10) * p - Program.currentPlayer.defence;
+                        int damage = rand.Next(1, 6) * p - Program.currentPlayer.defence;
                         if (damage < 0)
                             damage = 0;
                         Console.Write("You lose " + damage + " health");
+                        Program.currentPlayer.health -= damage;
                         Console.ReadKey();
                     }
                     else
@@ -129,8 +134,9 @@ namespace Gierka.Tools
                         Console.ReadKey();
                         Console.WriteLine("You woken up later by a tree. Gods saved you once again.");
                         break;
+
                         //Settlement.LoadSettlement();
-                        //go to safe point
+                        //safe point
                     }
                 }
                 else if (input.ToLower() == "h" || input.ToLower() == "heal")
@@ -141,7 +147,7 @@ namespace Gierka.Tools
                         Console.WriteLine("As you touched the blessings rune, you felt nothing and realized" +
                             " you used all of them.");
                         Console.WriteLine(n + " took advantage of your distraction.");
-                        int damage = p / 2 - Program.currentPlayer.defence;
+                        int damage = p + 2;
                         if (damage < 0)
                             damage = 0;
                         Console.WriteLine("It strikes you for " + damage + " health.");
@@ -154,10 +160,10 @@ namespace Gierka.Tools
                         Console.WriteLine("You gained " + bless + " health");
                         Program.currentPlayer.health += bless;
                         Program.currentPlayer.blessings--;
-                        int damage = p / 2 - Program.currentPlayer.defence;
+                        int damage = (p / 2);
                         if (damage < 0)
                             damage = 0;
-                        Console.WriteLine("The " + n + "struck you for " + damage + "health.");
+                        Console.WriteLine("The " + n + " struck you for " + damage + " health.");
                     }
                     Console.ReadKey();
                 }
@@ -167,11 +173,12 @@ namespace Gierka.Tools
                     Console.WriteLine("You felt dizzy and suddenly everything went to black.");
                     Console.ReadKey();
                     Environment.Exit(0);
+
                 }
                 Console.ReadKey();
             }
             int r = rand.Next(10, 50);
-            Console.WriteLine("You defeated the " + n + "and got " + r + " runes");
+            Console.WriteLine("You defeated the " + n + " and got " + r + " runes");
             Program.currentPlayer.runes += r;
             Console.ReadKey();
             Console.Clear();

@@ -174,7 +174,7 @@ namespace Gierka.Places
             Console.WriteLine("");
             string answear = Console.ReadLine().ToLower();
             if (answear == "y" || answear == "yes")
-                p.SetCurrentWeapon(selectedWeapon, p);
+                p.SetCurrentWeapon(selectedWeapon);
             else
                 Console.Clear();
         }

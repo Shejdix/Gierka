@@ -14,7 +14,9 @@ namespace Gierka.Dashboards
     public class Player
     {
         public List<Armor> Armors { get; private set; }
+
         public List<Weapon> Weapons { get; private set; }
+
         public Armor CurrentArmor { get; private set; }
         public Weapon CurrentWeapon { get; private set; }
 
@@ -26,8 +28,8 @@ namespace Gierka.Dashboards
         public int coins { get; set; } = 200;
         public int health { get; set; } = 10;
         public int damage { get; set; } = 1; //with lvls
-        public int weaponValue { get; set; }
-        public int defence { get; set; } = 0;
+        public int weaponValue { get; set; } = 4;
+        public int defence { get; set; } = 2;
         public int blessings { get; set; } = 5;
 
         string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "playerData.json");
@@ -72,7 +74,7 @@ namespace Gierka.Dashboards
             if (armor != null)
             {
                 Armors.Add(armor);
-                Console.WriteLine($"{armor.Name,24} added to inventory.");
+                Console.WriteLine($"{armor.Name,-24} added to inventory.");
             }
             else
             {
@@ -81,12 +83,11 @@ namespace Gierka.Dashboards
         }
         public void AddWeapon(string weaponName)
         {
-            Weapon weapon = Weapon.AllWeapons.Find(a => a.Name == weaponName);
-
+            Weapon weapon = Weapon.AllWeapons.Find(w => w.Name == weaponName);
             if (weapon != null)
             {
                 Weapons.Add(weapon);
-                Console.WriteLine($"{weapon.Name,24} added to inventory.");
+                Console.WriteLine($"{weapon.Name,-24} added to inventory.");
             }
             else
             {
@@ -104,6 +105,7 @@ namespace Gierka.Dashboards
                 Console.WriteLine("/Press any Key/");
                 Console.ReadKey();
                 Console.Clear();
+                defence = CurrentArmor.Defence;
             }
             else
             {
@@ -115,7 +117,7 @@ namespace Gierka.Dashboards
 
             }
         }
-        public void SetCurrentWeapon(string weaponName, Player p)
+        public void SetCurrentWeapon(string weaponName)
         {
             Weapon selectedWeapon = Weapons.Find(a => a.Name.Equals(weaponName, StringComparison.OrdinalIgnoreCase));
             if (selectedWeapon != null)
@@ -126,7 +128,7 @@ namespace Gierka.Dashboards
                 Console.WriteLine("/Press any Key/");
                 Console.ReadKey();
                 Console.Clear();
-                p.weaponValue = CurrentWeapon.Attack;
+                weaponValue = CurrentWeapon.Attack;
             }
             else
             {
@@ -137,13 +139,6 @@ namespace Gierka.Dashboards
                 Console.Clear();
 
             }
-        }
-        public void BasicInventory(Player p)
-        {
-            Armors.Add(new Armor("Linen Tunic", 0, 0));
-            Weapons.Add(new Weapon("Long Stick", 2, 0));
-            SetCurrentArmor("Linen Tunic");
-            SetCurrentWeapon("Long Stick", p);
         }
         public void ShowInventory(Player p)
         {
@@ -207,7 +202,7 @@ namespace Gierka.Dashboards
                     {
                         Console.WriteLine("Name of chosen weapon: ");
                         string pick = Console.ReadLine().ToLower();
-                        SetCurrentWeapon(pick,p);
+                        SetCurrentWeapon(pick);
                         Console.ReadKey();
                     }
                 }
