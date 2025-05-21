@@ -13,12 +13,12 @@ Funkcje gry:
 Struktura katalogów:
 RPGchyba/
 - Dashboards/ # Zarządzanie grą i graczem
-    np. Player.cs
+    ~np. Player.cs
 - Places/ # Lokacje w grze (np. Shop, Forest)
-    np. Shop.cs
+    ~np. Shop.cs
 - Tools/ # Narzędzia pomocnicze (dialogi, losowe spotkania)
-    np. Dialogue.cs
-    np. Encounters.cs
+    ~np. Dialogue.cs
+    ~np. Encounters.cs
 - Program.cs # Główna logika gry
 
 
