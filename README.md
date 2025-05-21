@@ -11,7 +11,15 @@ Funkcje gry:
 -  Walki z prostym interfacem
 
 Struktura katalogów:
-![image](https://github.com/user-attachments/assets/41d0061e-a898-4154-8a3b-92507179b390)
+RPGchyba/
+- Dashboards/ # Zarządzanie grą i graczem
+    np. Player.cs
+- Places/ # Lokacje w grze (np. Shop, Forest)
+    np. Shop.cs
+- Tools/ # Narzędzia pomocnicze (dialogi, losowe spotkania)
+    np. Dialogue.cs
+    np. Encounters.cs
+- Program.cs # Główna logika gry
 
 
 
